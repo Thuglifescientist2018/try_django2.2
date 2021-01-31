@@ -6,7 +6,7 @@
 {% block content %}
 {% for object in object_list %}
 <div class="container">
-    <li>{{ object.title }} </li>
+    <li><a href={{object.slug}}>{{ object.title }}</a> </li>
 </div>
 {% endfor %}
 {% endblock %}

@@ -30,7 +30,7 @@ def blog_post_create_view(request):
     # ? use a form
     form = BlogPostModelForm(request.POST or None)
     if form.is_valid():
-        print(form.cleaned_data)
+
         obj = form.save(commit=False)
         # Here I can manipulate obj with .title or whatever in the model
         obj.save()
@@ -43,14 +43,18 @@ def blog_post_create_view(request):
 def blog_post_detail_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     template_name = "detail.html"
-    context = {'object': obj, 'form': None}
+    context = {'object': obj}
     return render(request, template_name, context)
 
 
 def blog_post_update_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
-    template_name = "update.html"
-    context = {'object': obj, 'form': None}
+    # this will load data in the form based upon the obj.
+    form = BlogPostModelForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+    template_name = "form.html"
+    context = {'form': form, "title": f"Update {obj.title}"}
     return render(request, template_name, context)
 
 

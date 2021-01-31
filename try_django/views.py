@@ -10,7 +10,7 @@ def home(request):
 def contact(request):
     form = ContactForm(request.POST or None)
     if form.is_valid():
-        print(form.cleaned_data)
+
         form = ContactForm()
     template_name = "form.html"
     context = {"title": "Contact Us",

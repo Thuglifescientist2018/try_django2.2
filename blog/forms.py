@@ -10,21 +10,17 @@ class BlogPostForm(forms.Form):
 
 class BlogPostModelForm(forms.ModelForm):
     class Meta:
-        model = BlogPost
+        model = BlogPost  # its necessary to link the model BlogPost to have connection with it
         fields = ['title', 'slug', 'content']
 
     def clean_title(self, *args, **kwargs):
+        instance = self.instance
         title = self.cleaned_data.get("title")
         qs = BlogPost.objects.filter(title__iexact=title)
+        if instance is not None:  # we ignore the old instance update the data due to which
+            # we are not gonna be getting title already exists error i think slug updates fine after adding instance=obj in the update view
+            qs = qs.exclude(pk=instance.pk)  # id = instance of id
         if qs.exists():
             raise forms.ValidationError(
                 "This title has been already taken")
         return title
-
-    def clean_content(self, *args, **kwargs):
-        content = self.cleaned_data.get("content")
-        qs = BlogPost.objects.filter(content=content)
-        if qs.exists():
-            raise forms.ValidationError(
-                "This content  has been already taken")
-        return content
