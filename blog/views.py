@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django import http
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404, resolve_url
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import BlogPost
 from .forms import BlogPostModelForm
 # Create your views here.
@@ -61,5 +61,9 @@ def blog_post_update_view(request, slug):
 def blog_post_delete_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     template_name = "delete.html"
-    context = {'object': obj, 'form': None}
+    if request.method == "POST":
+        obj.delete()
+        # we must return the redirect or it will not work or execute
+        return redirect("/blog")
+    context = {'object': obj}
     return render(request, template_name, context)
