@@ -4,9 +4,11 @@
 
 
 {% block content %}
-{% for object in object_list %}
-<div class="container">
-    <li><a href={{object.slug}}>{{ object.title }}</a> </li>
+<div class="row">
+    {% for object in object_list %}
+    
+        {% include 'list-inline.html' with blog_post=object truncate=True %}
+    
+    {% endfor %}
 </div>
-{% endfor %}
 {% endblock %}

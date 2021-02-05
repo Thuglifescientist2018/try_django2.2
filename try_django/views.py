@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from .forms import ContactForm
+from blog.models import BlogPost
 
 
 def home(request):
-    template_name = "home.html"
-    return render(request, template_name)
+    my_title = "Welcome to try Django..."
+    qs = BlogPost.objects.all()[:5]
+    context = {"title": my_title, 'blog_list': qs}
+    return render(request, "home.html", context)
 
 
 def contact(request):

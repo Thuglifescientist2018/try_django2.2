@@ -2,8 +2,8 @@
 {% block title %} Welcome Home {% endblock %}
 {% load static %}
 {% block content %}
-<ul>
-    <li><a href="blog">Blog List</a></li>
-    <li><a href="contact">Contact</a></li>
-</ul>
+<h1>{{title}}</h1>
+{% for a in blog_list %}
+    {% include 'list-inline.html' with blog_post=a truncate=True detail=False %}
+{% endfor %}
 {% endblock %}

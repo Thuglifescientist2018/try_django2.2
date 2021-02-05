@@ -7,9 +7,10 @@
 
 <h3>Are you sure you want to delete the following:</h3>
 <p>{{object.title}}</p>
+<a href="/blog" class="btn btn-secondary">No, Don't</a>
 
 <form method="POST"> {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
 </form>
 
 {% endblock %}
