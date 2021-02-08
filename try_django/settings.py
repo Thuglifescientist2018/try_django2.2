@@ -119,4 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+LOCAL_STATIC_CDN_PATH = os.path.join(BASE_DIR, "static_cdn_test")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
+STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, "static")
+MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, "media")
+MEDIA_URL = '/media/'
