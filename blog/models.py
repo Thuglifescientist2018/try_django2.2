@@ -9,6 +9,7 @@ User = settings.AUTH_USER_MODEL
 class BlogPostQuerySet(models.QuerySet):
     def published(self):
         now = timezone.now()
+        # lte = lesser than oe equal to
         return self.filter(publish_date__lte=now)
 
 

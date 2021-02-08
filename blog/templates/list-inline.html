@@ -1,5 +1,5 @@
 <div class="col-12 col-md-10 mb-3 mx-auto">
-    <div class="card">
+    <div class="card {% if not blog_post.publish_date %} border border-warning {% endif %}">
         <div class="card-body">
             <h5 class="card-title">{{ blog_post.title }}</h5>
             <p class="card-text"> 
@@ -10,7 +10,8 @@
                 {% endif %}
             </p>
             {% if not detail %}
-            <a href="{{ blog_post.get_absolute_url}}">View</a>
+                {% if not blog_post.publish_date %} Draft {% endif %}
+            <a href="{{ blog_post.get_absolute_url}}" class="{% if not blog_post.publish_date %} text-decoration-none text-secondary {% endif %}">View</a>
             {% endif %}
         </div>
     </div>

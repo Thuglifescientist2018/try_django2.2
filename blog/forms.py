@@ -11,7 +11,7 @@ class BlogPostForm(forms.Form):
 class BlogPostModelForm(forms.ModelForm):
     class Meta:
         model = BlogPost  # its necessary to link the model BlogPost to have connection with it
-        fields = ['title', 'slug', 'content']
+        fields = ['title', 'slug', 'content', 'publish_date']
 
     def clean_title(self, *args, **kwargs):
         instance = self.instance

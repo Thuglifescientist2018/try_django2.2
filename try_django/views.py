@@ -5,7 +5,10 @@ from blog.models import BlogPost
 
 def home(request):
     my_title = "Welcome to try Django..."
-    qs = BlogPost.objects.all()[:5]
+    qs = BlogPost.objects.all().published()
+    if request.user.is_authenticated:
+        my_qs = BlogPost.objects.filter(user=request.user)
+        qs = (qs | my_qs).distinct()
     context = {"title": my_title, 'blog_list': qs}
     return render(request, "home.html", context)
 
