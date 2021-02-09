@@ -17,9 +17,11 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from .views import home, contact
+from searches.views import search_view
 
 urlpatterns = [
     path('', home, name="home"),
+    path('search/', search_view),
     path('contact', contact),
     path('blog/', include('blog.urls')),
     path('admin/', admin.site.urls),
