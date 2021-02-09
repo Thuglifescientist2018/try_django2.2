@@ -31,7 +31,7 @@ def blog_post_list_view(request):
 def blog_post_create_view(request):
     # Create Object
     # ? use a form
-    form = BlogPostModelForm(request.POST or None)
+    form = BlogPostModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
 
         obj = form.save(commit=False)
@@ -53,7 +53,8 @@ def blog_post_detail_view(request, slug):
 def blog_post_update_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     # this will load data in the form based upon the obj.
-    form = BlogPostModelForm(request.POST or None, instance=obj)
+    form = BlogPostModelForm(request.POST or None,
+                             request.FILES or None, instance=obj)
     if form.is_valid():
         form.save()
     template_name = "form.html"
