@@ -4,8 +4,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django import http
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import BlogPost
+from .models import BlogPost, User
 from .forms import BlogPostModelForm
+from comments.models import UserComment
+from comments.forms import UserCommentModelForm
 # Create your views here.
 
 
@@ -46,7 +48,13 @@ def blog_post_create_view(request):
 def blog_post_detail_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     template_name = "detail.html"
-    context = {'object': obj}
+    comments = UserComment.objects.all()
+    form = UserCommentModelForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+
+    context = {'object': obj, "form": form,
+               "current_user": request.user, "comments": comments}
     return render(request, template_name, context)
 
 
@@ -67,7 +75,7 @@ def blog_post_delete_view(request, slug):
     template_name = "delete.html"
     if request.method == "POST":
         obj.delete()
-        # we must return the redirect or it will not work or execute
+        # we must 'return' the redirect or it will not work or execute
         return redirect("/blog")
     context = {'object': obj}
     return render(request, template_name, context)

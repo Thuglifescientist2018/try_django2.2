@@ -24,6 +24,7 @@ urlpatterns = [
     path('search/', search_view),
     path('contact', contact),
     path('blog/', include('blog.urls')),
+
     path('admin/', admin.site.urls),
 ]
 
